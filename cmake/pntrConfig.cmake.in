@@ -1,0 +1,4 @@
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/pntr.cmake")
+message(STATUS "Found package pntr from config in ${pntr_DIR}")
