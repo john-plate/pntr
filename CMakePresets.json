@@ -1,0 +1,389 @@
+﻿{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "default",
+      "hidden": true,
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "$env{USERBUILD}/${sourceDirName}-${presetName}",
+      "installDir": "$env{USERINSTALL}/${sourceDirName}",
+      "cacheVariables": {
+        "CMAKE_MESSAGE_LOG_LEVEL": "VERBOSE",
+        "PNTR_SINGLE_HEADER": "ON",
+        "PNTR_TUTORIAL": "ON",
+        "PNTR_TESTING": "ON"
+      }
+    },
+    {
+      "name": "windows",
+      "hidden": true,
+      "inherits": "default",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "msvc",
+      "hidden": true,
+      "inherits": "windows",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "cl.exe"
+      }
+    },
+    {
+      "name": "clang-cl",
+      "hidden": true,
+      "inherits": "windows",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang-cl.exe"
+      }
+    },
+    {
+      "name": "msvc-x64",
+      "inherits": "msvc",
+      "displayName": "Visual C++ x64",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "toolset": {
+        "value": "host=x64",
+        "strategy": "external"
+      }
+    },
+    {
+      "name": "msvc-x86",
+      "inherits": "msvc",
+      "displayName": "Visual C++ x86",
+      "architecture": {
+        "value": "x86",
+        "strategy": "external"
+      },
+      "toolset": {
+        "value": "host=x86",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "FETCHCONTENT_TRY_FIND_PACKAGE_MODE": "NEVER"
+      }
+    },
+    {
+      "name": "clang-cl-x64",
+      "inherits": "clang-cl",
+      "displayName": "Clang CL x64",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "toolset": {
+        "value": "host=x64",
+        "strategy": "external"
+      }
+    },
+    {
+      "name": "clang-cl-x86",
+      "inherits": "clang-cl",
+      "displayName": "Clang CL x86",
+      "architecture": {
+        "value": "x86",
+        "strategy": "external"
+      },
+      "toolset": {
+        "value": "host=x64",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-m32",
+        "FETCHCONTENT_TRY_FIND_PACKAGE_MODE": "NEVER"
+      }
+    },
+    {
+      "name": "gcc-ucrt",
+      "inherits": "windows",
+      "displayName": "GCC UCRT64",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "g++.exe",
+        "FETCHCONTENT_TRY_FIND_PACKAGE_MODE": "NEVER"
+      },
+      "environment": {
+        "PATH": "$env{MSYS2_ROOT}/usr/bin;$env{MSYS2_ROOT}/ucrt64/bin;$penv{PATH}"
+      }
+    },
+    {
+      "name": "linux",
+      "hidden": true,
+      "inherits": "default",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "gcc",
+      "inherits": "linux",
+      "displayName": "GCC",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "g++"
+      }
+    },
+    {
+      "name": "clang",
+      "inherits": "linux",
+      "displayName": "Clang",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang++"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "default",
+      "hidden": true,
+      "verbose": true
+    },
+    {
+      "name": "windows",
+      "hidden": true,
+      "inherits": "default",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "msvc",
+      "hidden": true,
+      "inherits": "windows"
+    },
+    {
+      "name": "clang-cl",
+      "hidden": true,
+      "inherits": "windows"
+    },
+    {
+      "name": "gcc-ucrt",
+      "hidden": true,
+      "inherits": "windows",
+      "configurePreset": "gcc-ucrt"
+    },
+    {
+      "name": "msvc-x64",
+      "hidden": true,
+      "inherits": "msvc",
+      "configurePreset": "msvc-x64"
+    },
+    {
+      "name": "msvc-x86",
+      "hidden": true,
+      "inherits": "msvc",
+      "configurePreset": "msvc-x86"
+    },
+    {
+      "name": "clang-cl-x64",
+      "hidden": true,
+      "inherits": "clang-cl",
+      "configurePreset": "clang-cl-x64"
+    },
+    {
+      "name": "clang-cl-x86",
+      "hidden": true,
+      "inherits": "clang-cl",
+      "configurePreset": "clang-cl-x86"
+    },
+    {
+      "name": "msvc-x64-debug",
+      "inherits": "msvc-x64",
+      "displayName": "MSVC x64 Debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "msvc-x64-release",
+      "inherits": "msvc-x64",
+      "displayName": "MSVC x64 Release",
+      "configuration": "Release"
+    },
+    {
+      "name": "msvc-x86-debug",
+      "inherits": "msvc-x86",
+      "displayName": "MSVC x86 Debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "msvc-x86-release",
+      "inherits": "msvc-x86",
+      "displayName": "MSVC x86 Release",
+      "configuration": "Release"
+    },
+    {
+      "name": "clang-cl-x64-debug",
+      "inherits": "clang-cl-x64",
+      "displayName": "Clang CL x64 Debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "clang-cl-x64-release",
+      "inherits": "clang-cl-x64",
+      "displayName": "Clang CL x64 Release",
+      "configuration": "Release"
+    },
+    {
+      "name": "clang-cl-x86-debug",
+      "inherits": "clang-cl-x86",
+      "displayName": "Clang CL x86 Debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "clang-cl-x86-release",
+      "inherits": "clang-cl-x86",
+      "displayName": "Clang CL x86 Release",
+      "configuration": "Release"
+    },
+    {
+      "name": "gcc-ucrt-debug",
+      "inherits": "gcc-ucrt",
+      "displayName": "GCC UCRT64 Debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "gcc-ucrt-release",
+      "inherits": "gcc-ucrt",
+      "displayName": "GCC UCRT64 Release",
+      "configuration": "Release"
+    },
+    {
+      "name": "linux",
+      "hidden": true,
+      "inherits": "default",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "gcc",
+      "hidden": true,
+      "inherits": "linux",
+      "configurePreset": "gcc"
+    },
+    {
+      "name": "clang",
+      "hidden": true,
+      "inherits": "linux",
+      "configurePreset": "clang"
+    },
+    {
+      "name": "gcc-debug",
+      "inherits": "gcc",
+      "displayName": "GCC Debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "gcc-release",
+      "inherits": "gcc",
+      "displayName": "GCC Release",
+      "configuration": "Release"
+    },
+    {
+      "name": "clang-debug",
+      "inherits": "clang",
+      "displayName": "Clang Debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "clang-release",
+      "inherits": "clang",
+      "displayName": "Clang Release",
+      "configuration": "Release"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "default",
+      "hidden": true,
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "stopOnFailure": true,
+        "noTestsAction": "error"
+      }
+    },
+    {
+      "name": "windows",
+      "hidden": true,
+      "inherits": "default",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "msvc",
+      "hidden": true,
+      "inherits": "windows"
+    },
+    {
+      "name": "clang-cl",
+      "hidden": true,
+      "inherits": "windows"
+    },
+    {
+      "name": "msvc-x64",
+      "inherits": "msvc",
+      "configurePreset": "msvc-x64",
+      "displayName": "Visual C++ x64"
+    },
+    {
+      "name": "msvc-x86",
+      "inherits": "msvc",
+      "configurePreset": "msvc-x86",
+      "displayName": "Visual C++ x86"
+    },
+    {
+      "name": "clang-cl-x64",
+      "inherits": "clang-cl",
+      "configurePreset": "clang-cl-x64",
+      "displayName": "Clang CL x64"
+    },
+    {
+      "name": "clang-cl-x86",
+      "inherits": "clang-cl",
+      "configurePreset": "clang-cl-x86",
+      "displayName": "Clang CL x86"
+    },
+    {
+      "name": "gcc-ucrt",
+      "inherits": "windows",
+      "configurePreset": "gcc-ucrt",
+      "displayName": "GCC UCRT64"
+    },
+    {
+      "name": "linux",
+      "hidden": true,
+      "inherits": "default",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "gcc",
+      "inherits": "linux",
+      "configurePreset": "gcc",
+      "displayName": "GCC"
+    },
+    {
+      "name": "clang",
+      "inherits": "linux",
+      "configurePreset": "clang",
+      "displayName": "Clang"
+    }
+  ]
+}
